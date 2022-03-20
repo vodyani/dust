@@ -1,6 +1,6 @@
 # Vodyani dust
 
-*🌟 "dust" was a mix of different miniaturized threads that could replicate themselves, self-assemble, and network. Dust was capable of simple physical tasks as well as feats of advanced computing.  Its utility and flexibility became such that became an integral component of vodyani everyday life.*
+*🌟 "dust" is a hybrid thread pool of different micro-threads that can self-manage, self-assemble and interact externally. Dust is able to perform simple physical tasks as well as computations for complex scenarios. Its utility and flexibility have become an integral part of vodyani.*
 
 [![Npm](https://img.shields.io/npm/v/@vodyani/dust)](https://www.npmjs.com/package/@vodyani/dust)
 [![Npm](https://img.shields.io/npm/dm/@vodyani/dust)](https://www.npmjs.com/package/@vodyani/dust)
