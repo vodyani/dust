@@ -3,7 +3,7 @@
   "license": "MIT",
   "version": "0.0.0",
   "author": "ChoGathK",
-  "description": "🌟 `dust` was a mix of different miniaturized threads that could replicate themselves, self-assemble, and network. Dust was capable of simple physical tasks as well as feats of advanced computing.  Its utility and flexibility became such that became an integral component of vodyani everyday life.",
+  "description": "dust is a hybrid thread pool of different micro-threads that can self-manage, self-assemble and interact externally. Dust is able to perform simple physical tasks as well as computations for complex scenarios. Its utility and flexibility have become an integral part of vodyani.",
   "homepage": "https://github.com/vodyani/dust#readme",
   "repository": {
     "type": "git",
