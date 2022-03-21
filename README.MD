@@ -1,6 +1,6 @@
 # Vodyani dust
 
-*🌟 "dust" is a hybrid thread pool of different micro-threads that can self-manage, self-assemble and interact externally. dust is able to perform simple physical tasks as well as computations for complex scenarios.*
+*🌟 "dust" is a hybrid thread pool of different workers that can self-manage, self-assemble and interact externally.*
 
 [![Npm](https://img.shields.io/npm/v/@vodyani/dust)](https://www.npmjs.com/package/@vodyani/dust)
 [![Npm](https://img.shields.io/npm/dm/@vodyani/dust)](https://www.npmjs.com/package/@vodyani/dust)

@@ -3,7 +3,7 @@
   "license": "MIT",
   "version": "0.0.0",
   "author": "ChoGathK",
-  "description": "🌟 dust is a hybrid thread pool of different micro-threads that can self-manage, self-assemble and interact externally. dust is able to perform simple physical tasks as well as computations for complex scenarios.",
+  "description": "🌟 \"dust\" is a hybrid thread pool of different workers that can self-manage, self-assemble and interact externally.",
   "homepage": "https://github.com/vodyani/dust#readme",
   "repository": {
     "type": "git",
