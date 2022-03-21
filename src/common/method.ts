@@ -1,7 +1,8 @@
 export function getRelativePath(absolutePath: string, currentPath: string) {
   const relativePath = absolutePath.split('/');
-  relativePath.shift();
   const currentAbsolutePath = currentPath.split('/');
+
+  relativePath.shift();
   currentAbsolutePath.shift();
 
   let num = 0;

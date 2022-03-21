@@ -1,19 +1,43 @@
 import { resolve } from 'path';
+import { isMainThread } from 'worker_threads';
 
 import { describe, it, expect } from '@jest/globals';
 
-import { Dust } from '../src/common/base';
+import { DustThread } from '../src/common/base';
 
 const workers = {
   'task': resolve(__dirname, './worker/task.js'),
+  'error': resolve(__dirname, './worker/error.js'),
   'async-task': resolve(__dirname, './worker/async-task.js'),
   'transferable-task': resolve(__dirname, './worker/transferable-task.js'),
 };
 
 describe('Dust', () => {
   it('Test create Dust task', async () => {
-    const dust = new Dust(workers.task, { isAbsolutePath: true });
-    const result = await dust.execute(1, 2);
-    expect(result).toBe(3);
+    const dustThread = new DustThread(workers.task, { useAbsolute: true });
+    const result = await dustThread.execute(1, 2);
+
+    expect(isMainThread).toBe(true);
+    expect(result.count).toBe(3);
+    expect(result.isMainThread).toBe(false);
+  });
+
+  it('Test create Dust task but use error path', async () => {
+    try {
+      // eslint-disable-next-line no-new
+      new DustThread('../test/worker/task.js');
+    } catch (error) {
+      expect(error.message).toBe("Cannot find module '/Users/liuyang/owner/vodyani-package/dust/src/common/test/worker/task.js' from 'node_modules/threads/dist/master/implementation.node.js'");
+    }
+  });
+
+  it('Test create Error Dust task', async () => {
+    const dustThread = new DustThread(workers.error, { useAbsolute: true });
+
+    try {
+      await dustThread.execute();
+    } catch (error) {
+      expect(error.message).toBe('Something went wrong');
+    }
   });
 });

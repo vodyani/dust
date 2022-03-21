@@ -3,7 +3,7 @@ import { ThreadsWorkerOptions } from 'threads/dist/types/master';
 export { ThreadsWorkerOptions };
 
 export interface DustWorkerOptions extends ThreadsWorkerOptions {
-  isAbsolutePath?: boolean;
+  useAbsolute?: boolean;
 }
 
 export interface DustPoolOptions {
