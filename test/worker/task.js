@@ -3,7 +3,6 @@ const { isMainThread } = require('worker_threads');
 
 const { expose } = require('threads/worker');
 
-
 expose(
   function addTask(a, b) {
     return {

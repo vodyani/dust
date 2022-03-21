@@ -13,7 +13,7 @@ const workers = {
 };
 
 describe('Dust', () => {
-  it('Test create Dust task', async () => {
+  it('Test create task', async () => {
     const dustThread = new DustThread(workers.task, { useAbsolute: true });
     const result = await dustThread.execute(1, 2);
 
@@ -22,16 +22,27 @@ describe('Dust', () => {
     expect(result.isMainThread).toBe(false);
   });
 
-  it('Test create Dust task but use error path', async () => {
+  it('Test create async task', async () => {
+    const dustThread = new DustThread(workers['async-task'], { useAbsolute: true });
+    const result = await dustThread.execute(1, 2);
+
+    expect(isMainThread).toBe(true);
+    expect(result.count).toBe(3);
+    expect(result.isMainThread).toBe(false);
+  });
+
+  it('Test create task but use error path', async () => {
     try {
       // eslint-disable-next-line no-new
       new DustThread('../test/worker/task.js');
     } catch (error) {
-      expect(error.message).toBe("Cannot find module '/Users/liuyang/owner/vodyani-package/dust/src/common/test/worker/task.js' from 'node_modules/threads/dist/master/implementation.node.js'");
+      expect(error.message).toBe(
+        "Cannot find module '/Users/liuyang/owner/vodyani-package/dust/src/common/test/worker/task.js' from 'node_modules/threads/dist/master/implementation.node.js'",
+      );
     }
   });
 
-  it('Test create Error Dust task', async () => {
+  it('Test create Error task', async () => {
     const dustThread = new DustThread(workers.error, { useAbsolute: true });
 
     try {
