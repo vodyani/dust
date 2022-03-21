@@ -1,37 +1,65 @@
+import { resolve } from 'path';
+
+import {
+  toRetry,
+  isValid,
+  FixedContext,
+  isValidArray,
+  isValidObject,
+} from '@vodyani/core';
 import { cloneDeep, range } from 'lodash';
-import { Pool, Thread, spawn } from 'threads';
-import { FixedContext, toRetry, isValid, isValidArray, isValidObject } from '@vodyani/core';
+import { Pool, Thread, Worker, spawn } from 'threads';
 
 import { DustTaskWorkflow } from './type';
-import { DustPoolOptions } from './interface';
+import { getRelativePath } from './method';
+import { DustWorkerOptions, DustOptions } from './interface';
+
+export class DustWorker extends Worker {
+  constructor(path: string, options?: DustWorkerOptions) {
+    const workerFilePath = isValidObject(options) && options.isAbsolutePath
+      ? getRelativePath(path, resolve(__dirname, './base'))
+      : path;
+
+    super(workerFilePath, cloneDeep(options));
+  }
+}
 
 export class Dust {
-  @FixedContext
-  public async execute(workerPath: string, ...args: any[]) {
-    const newDust = await spawn(new Worker(workerPath));
+  private worker: Worker;
 
+  constructor(path: string, options?: DustWorkerOptions) {
+    this.worker = new DustWorker(
+      path,
+      options,
+    );
+  }
+
+  @FixedContext
+  public async execute(...args: any[]) {
+    const newDust = await spawn(this.worker);
     const result = await newDust(...args);
 
     await Thread.terminate(newDust);
+    this.worker = null;
 
     return result;
   }
 }
 
-export class DustHybridContainer<KEY = any> {
+export class DustContainer<KEY = any> {
   private store: Map<KEY, Pool<Thread>> = new Map();
 
   @FixedContext
-  public create(key: KEY, workerPath: string, option?: DustPoolOptions) {
+  public create(key: KEY, path: string, option?: DustOptions) {
     let dustPool: Pool<Thread> = null;
 
     if (!this.store.has(key)) {
-      const worker = new Worker(workerPath);
+      const worker = new DustWorker(path, option?.worker);
 
       dustPool = Pool(
         () => spawn(worker),
         // Prevents contamination of incoming configuration parameters
-        isValidObject(option) ? cloneDeep(option) : {},
+        isValidObject(option.pool) ? cloneDeep(option.pool) : {},
       );
 
       this.store.set(key, dustPool);

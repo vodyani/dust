@@ -1,9 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { Dust, DustHybridContainer } from './common';
+import { DustContainer } from './common';
 
 @Injectable()
-export class DustProvider extends Dust {}
-
-@Injectable()
-export class DustHybridProvider extends DustHybridContainer {}
+export class DustProvider extends DustContainer {}

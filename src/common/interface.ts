@@ -1,3 +1,11 @@
+import { ThreadsWorkerOptions } from 'threads/dist/types/master';
+
+export { ThreadsWorkerOptions };
+
+export interface DustWorkerOptions extends ThreadsWorkerOptions {
+  isAbsolutePath?: boolean;
+}
+
 export interface DustPoolOptions {
   /**
    * Maximum no. of tasks to run on one worker thread at a time. Defaults to one.
@@ -15,4 +23,9 @@ export interface DustPoolOptions {
    * No. of worker threads to spawn and to be managed by the pool.
    */
   size?: number;
+}
+
+export interface DustOptions {
+  worker?: DustWorkerOptions;
+  pool?: DustPoolOptions;
 }
