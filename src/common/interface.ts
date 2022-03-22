@@ -3,6 +3,9 @@ import { ThreadsWorkerOptions } from 'threads/dist/types/master';
 export { ThreadsWorkerOptions };
 
 export interface DustWorkerOptions extends ThreadsWorkerOptions {
+  /**
+   * Whether to use absolute paths
+   */
   useAbsolute?: boolean;
 }
 
@@ -26,6 +29,12 @@ export interface DustPoolOptions {
 }
 
 export interface DustOptions {
+  /**
+   * Dust worker creation parameters
+   */
   worker?: DustWorkerOptions;
+  /**
+   * Dust pool initialization parameters
+   */
   pool?: DustPoolOptions;
 }

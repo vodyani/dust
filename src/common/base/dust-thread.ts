@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash';
 import { spawn, Thread } from 'threads';
-import { FixedContext, isValidObject, toRetry } from '@vodyani/core';
+import { FixedContext, isValidObject } from '@vodyani/core';
 
 import { DustWorkerOptions } from '../interface';
 
@@ -19,7 +19,7 @@ export class DustThread {
 
   @FixedContext
   public async close(dustThread: Thread): Promise<void> {
-    await toRetry(3, 1000, Thread.terminate, dustThread);
+    await Thread.terminate(dustThread);
     this.worker = null;
   }
 
