@@ -156,11 +156,13 @@ describe('DustContainer Push', () => {
       },
     );
 
-    container.getWorkFlow('push-task')
-      .push(1, 2)
-      .push(3, 4)
-      .push(5, 6)
-      .commit();
+    const workflow = container.getWorkFlow('push-task');
+
+    workflow.push(1, 2);
+    workflow.push(3, 4);
+    workflow.push(5, 6);
+
+    await workflow.commit();
 
     await container.close('push-task');
   });
@@ -182,17 +184,21 @@ describe('DustContainer Push', () => {
       },
     );
 
-    await container.getWorkFlow('make-file')
-      .push()
-      .push()
-      .push()
-      .commit();
+    const makeFileWorkflow = container.getWorkFlow('make-file');
+
+    makeFileWorkflow.push();
+    makeFileWorkflow.push();
+    makeFileWorkflow.push();
+
+    await makeFileWorkflow.commit();
 
     expect(readdirSync(resolve(__dirname, '../temp')).length).toBe(3);
 
-    await container.getWorkFlow('remove-file')
-      .push()
-      .commit();
+    const rmWorkflow = container.getWorkFlow('remove-file');
+
+    rmWorkflow.push();
+
+    await rmWorkflow.commit();
 
     expect(existsSync(resolve(__dirname, '../temp'))).toBe(false);
 
