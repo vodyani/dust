@@ -1,4 +1,5 @@
 import { resolve } from 'path';
+import { existsSync, readdirSync } from 'fs';
 import { isMainThread } from 'worker_threads';
 
 import { describe, it, expect } from '@jest/globals';
@@ -8,7 +9,9 @@ import { DustThread, DustContainer } from '../src/common/base';
 const workers = {
   'task': resolve(__dirname, './worker/task.js'),
   'error': resolve(__dirname, './worker/error.js'),
+  'make-file': resolve(__dirname, './worker/make-file.js'),
   'async-task': resolve(__dirname, './worker/async-task.js'),
+  'remove-file': resolve(__dirname, './worker/remove-file.js'),
   'transferable-task': resolve(__dirname, './worker/transferable-task.js'),
 };
 
@@ -70,15 +73,25 @@ describe('DustContainer execute', () => {
       2,
     );
 
-    const result2 = await container.execute(
+    const errorNameResult = await container.execute(
       'task2',
       1,
       2,
     );
 
-    expect(result2).toBe(null);
+    const resultList = await Promise.all([
+      container.execute('task', 10, 20),
+      container.execute('task', 30, 40),
+    ]);
+
     expect(result.count).toBe(3);
+
+    expect(errorNameResult).toBe(undefined);
+
     expect(result.isMainThread).toBe(false);
+
+    expect(resultList[0].count + resultList[1].count).toBe(100);
+
     await container.close('task');
   });
 
@@ -143,12 +156,47 @@ describe('DustContainer Push', () => {
       },
     );
 
-    container.push(
-      'push-task',
-      1,
-      2,
-    );
+    container.getWorkFlow('push-task')
+      .push(1, 2)
+      .push(3, 4)
+      .push(5, 6)
+      .commit();
 
     await container.close('push-task');
+  });
+
+  it('Test make file task and push with pool', async () => {
+    container.create(
+      'make-file',
+      workers['make-file'],
+      {
+        worker: { useAbsolute: true },
+      },
+    );
+
+    container.create(
+      'remove-file',
+      workers['remove-file'],
+      {
+        worker: { useAbsolute: true },
+      },
+    );
+
+    await container.getWorkFlow('make-file')
+      .push()
+      .push()
+      .push()
+      .commit();
+
+    expect(readdirSync(resolve(__dirname, '../temp')).length).toBe(3);
+
+    await container.getWorkFlow('remove-file')
+      .push()
+      .commit();
+
+    expect(existsSync(resolve(__dirname, '../temp'))).toBe(false);
+
+    await container.close('make-file');
+    await container.close('remove-file');
   });
 });

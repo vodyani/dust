@@ -37,40 +37,47 @@ export class DustContainer<KEY = any> {
   }
 
   @FixedContext
-  public async push(key: KEY, ...args: any[]) {
+  public getWorkFlow(key: KEY) {
     if (this.store.has(key)) {
-      const dust = this.store.get(key);
+      const workflow = {
+        commit: () => this.commit(key),
 
-      dust.queue(
-        async (threadHandler: any) => this.workflow(threadHandler, ...args),
-      );
+        push: (...args: any[]) => {
+          this.push(key, ...args);
+          return workflow;
+        },
+      };
 
-      await dust.settled();
+      return workflow;
     }
   }
 
   @FixedContext
   public async execute<T = any>(key: KEY, ...args: any[]) {
-    if (this.store.has(key)) {
-      const dust = this.store.get(key);
-
-      const result = await dust.queue(
-        async (threadHandler: any) => this.workflow(threadHandler, ...args),
-      );
-
+    try {
+      const result = await this.push(key, ...args);
       return result as T;
-    } else {
+    } catch (error) {
       return null;
     }
   }
 
   @FixedContext
-  private async workflow(threadHandler: any, ...args: any[]) {
-    try {
-      const result = await threadHandler(...args);
-      return result;
-    } catch (error) {
-      return null;
+  private async push(key: KEY, ...args: any[]) {
+    if (this.store.has(key)) {
+      const dust = this.store.get(key);
+
+      return dust.queue(
+        async (threadHandler: any) => threadHandler(...args),
+      );
+    }
+  }
+
+  @FixedContext
+  private async commit(key: KEY) {
+    if (this.store.has(key)) {
+      const dust = this.store.get(key);
+      await dust.settled();
     }
   }
 }
