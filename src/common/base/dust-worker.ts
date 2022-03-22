@@ -2,9 +2,8 @@ import { resolve } from 'path';
 
 import { Worker } from 'threads';
 import { cloneDeep } from 'lodash';
-import { isValidObject } from '@vodyani/core';
+import { getRelativePath, isValidObject } from '@vodyani/core';
 
-import { getRelativePath } from '../method';
 import { DustWorkerOptions } from '../interface';
 
 export class DustWorker extends Worker {
