@@ -39,16 +39,10 @@ export class DustContainer<KEY = any> {
   @FixedContext
   public getWorkFlow(key: KEY) {
     if (this.store.has(key)) {
-      const workflow = {
+      return {
         commit: () => this.commit(key),
-
-        push: (...args: any[]) => {
-          this.push(key, ...args);
-          return workflow;
-        },
+        push: (...args: any[]) => this.push(key, ...args),
       };
-
-      return workflow;
     }
   }
 

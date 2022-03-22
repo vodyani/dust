@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { writeFileSync, mkdirSync, existsSync } = require('fs');
 const { resolve } = require('path');
+const { writeFileSync, mkdirSync, existsSync } = require('fs');
 
-const { toSleep } = require('@vodyani/core');
 const { expose } = require('threads/worker');
+
+let count = 1;
 
 expose(
   async function makeFile() {
@@ -13,8 +14,8 @@ expose(
       mkdirSync(tempPath);
     }
 
-    await toSleep(200);
+    count += 1;
 
-    writeFileSync(`${tempPath}/${Date.now()}.txt`, 'Hello, World!');
+    writeFileSync(`${tempPath}/${count}.txt`, 'Hello, World!');
   },
 );
