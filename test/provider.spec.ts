@@ -17,7 +17,7 @@ const workers = {
 
 describe('Dust', () => {
   it('Test create task', async () => {
-    const dustThread = new DustThread(workers.task, { useAbsolute: true });
+    const dustThread = new DustThread(workers.task);
     const result = await dustThread.execute(1, 2);
 
     expect(isMainThread).toBe(true);
@@ -26,7 +26,7 @@ describe('Dust', () => {
   });
 
   it('Test create async task', async () => {
-    const dustThread = new DustThread(workers['async-task'], { useAbsolute: true });
+    const dustThread = new DustThread(workers['async-task'], { useRelative: false });
     const result = await dustThread.execute(1, 2);
 
     expect(isMainThread).toBe(true);
@@ -37,14 +37,14 @@ describe('Dust', () => {
   it('Test create task but use error path', async () => {
     try {
       // eslint-disable-next-line no-new
-      new DustThread('../test/worker/task.js');
+      new DustThread('../test/worker/task.js', { useRelative: true });
     } catch (error) {
       expect(!!error).toBe(true);
     }
   });
 
   it('Test create Error task', async () => {
-    const dustThread = new DustThread(workers.error, { useAbsolute: true });
+    const dustThread = new DustThread(workers.error);
 
     try {
       await dustThread.execute();
@@ -62,37 +62,35 @@ describe('DustContainer execute', () => {
       'task',
       workers.task,
       {
-        worker: { useAbsolute: true },
         pool: { maxQueuedJobs: 1, size: 1 },
       },
     );
 
-    const result = await container.execute(
-      'task',
-      1,
-      2,
-    );
+    const dust = container.get('task');
 
-    const errorNameResult = await container.execute(
-      'task2',
+    try {
+      container.get('errDust');
+    } catch (error) {
+      expect(error.message).toBe('DustContainer.store does not declare this key: errDust');
+    }
+
+    const result = await dust.execute(
       1,
       2,
     );
 
     const resultList = await Promise.all([
-      container.execute('task', 10, 20),
-      container.execute('task', 30, 40),
+      dust.execute(10, 20),
+      dust.execute(30, 40),
     ]);
 
     expect(result.count).toBe(3);
-
-    expect(errorNameResult).toBe(undefined);
 
     expect(result.isMainThread).toBe(false);
 
     expect(resultList[0].count + resultList[1].count).toBe(100);
 
-    await container.close('task');
+    await container.destroy('task');
   });
 
   it('Test create async task and execute with pool', async () => {
@@ -100,20 +98,20 @@ describe('DustContainer execute', () => {
       'async-task',
       workers['async-task'],
       {
-        worker: { useAbsolute: true },
         pool: { maxQueuedJobs: 1, size: 1 },
       },
     );
 
-    const result = await container.execute(
-      'async-task',
+    const dust = container.get('async-task');
+
+    const result = await dust.execute(
       1,
       2,
     );
 
     expect(result.count).toBe(3);
     expect(result.isMainThread).toBe(false);
-    await container.close('async-task');
+    await container.destroy('async-task');
   });
 
   it('Test create error task and execute with pool', async () => {
@@ -121,15 +119,16 @@ describe('DustContainer execute', () => {
       'error',
       workers.error,
       {
-        worker: { useAbsolute: true },
         pool: { maxQueuedJobs: 1, size: 1 },
       },
     );
 
-    const result = await container.execute('error');
+    const dust = container.get('error');
+
+    const result = await dust.execute('error');
 
     expect(result).toEqual((null));
-    await container.close('error');
+    await container.destroy('error');
   });
 });
 
@@ -141,6 +140,9 @@ describe('DustContainer Push', () => {
       container.create(
         'error-task',
         workers.task,
+        {
+          handler: { useRelative: true },
+        },
       );
     } catch (error) {
       expect(!!error).toBe(true);
@@ -151,58 +153,49 @@ describe('DustContainer Push', () => {
     container.create(
       'push-task',
       workers.task,
-      {
-        worker: { useAbsolute: true },
-      },
     );
 
-    const workflow = container.getWorkFlow('push-task');
+    const dust = container.get('push-task');
 
-    workflow.push(1, 2);
-    workflow.push(3, 4);
-    workflow.push(5, 6);
+    dust.push(1, 2);
+    dust.push(3, 4);
+    dust.push(5, 6);
 
-    await workflow.commit();
+    await dust.commit();
 
-    await container.close('push-task');
+    await container.destroy('push-task');
   });
 
   it('Test make file task and push with pool', async () => {
     container.create(
       'make-file',
       workers['make-file'],
-      {
-        worker: { useAbsolute: true },
-      },
     );
 
     container.create(
       'remove-file',
       workers['remove-file'],
-      {
-        worker: { useAbsolute: true },
-      },
     );
 
-    const makeFileWorkflow = container.getWorkFlow('make-file');
+    const dust = container.get('make-file');
 
-    makeFileWorkflow.push();
-    makeFileWorkflow.push();
-    makeFileWorkflow.push();
+    dust.push();
+    dust.push();
+    dust.push();
 
-    await makeFileWorkflow.commit();
+    await dust.commit();
 
     expect(readdirSync(resolve(__dirname, '../temp')).length).toBe(3);
 
-    const rmWorkflow = container.getWorkFlow('remove-file');
+    const rmDust = container.get('remove-file');
 
-    rmWorkflow.push();
+    rmDust.push();
 
-    await rmWorkflow.commit();
+    await rmDust.commit();
 
     expect(existsSync(resolve(__dirname, '../temp'))).toBe(false);
 
-    await container.close('make-file');
-    await container.close('remove-file');
+    await container.destroy('make-file');
+    await container.destroy('remove-file');
   });
 });
