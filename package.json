@@ -1,7 +1,7 @@
 {
   "name": "@vodyani/dust",
   "license": "MIT",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "ChoGathK",
   "description": "🌟 dust is a hybrid thread pool of different workers that can self-manage, self-assemble and interact externally.",
   "homepage": "https://github.com/vodyani/dust#readme",
