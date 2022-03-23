@@ -1,9 +1,28 @@
-import { Module } from '@nestjs/common';
+import { DynamicModule } from '@nestjs/common';
 
-import { DustProvider } from './provider';
+import { DustManagerOptions } from './common';
+import { DustProvider, DustManager } from './provider';
 
-@Module({
-  exports: [DustProvider],
-  providers: [DustProvider],
-})
-export class DustModule {}
+export class DustModule {
+  /**
+   * Creating dynamic modules
+   *
+   * @param options Used by DustManager to batch create dust execution thread pools based on configuration.
+   * @param global When "true", makes a module global-scoped. default `false`
+   *
+   * @publicApi
+   */
+  static forRoot(options: DustManagerOptions, global = false): DynamicModule {
+    const providers = [
+      DustProvider,
+      new DustManager(options).getFactoryProvider(),
+    ];
+
+    return {
+      global,
+      providers,
+      exports: providers,
+      module: DustModule,
+    };
+  }
+}

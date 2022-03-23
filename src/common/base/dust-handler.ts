@@ -1,6 +1,5 @@
 import { resolve } from 'path';
 
-import { omit } from 'lodash';
 import { Worker } from 'threads';
 import { getRelativePath, isValidObject } from '@vodyani/core';
 
@@ -22,9 +21,10 @@ export class DustHandler extends Worker {
     if (isValidObject(options)) {
       if (options.useRelative) {
         useRelative = true;
+        delete options.useRelative;
       }
 
-      handlerOptions = omit(options, ['useRelative']);
+      handlerOptions = options;
     }
 
     // Since you have to pass in relative paths when using the `threads` package, this solution is a no-brainer.

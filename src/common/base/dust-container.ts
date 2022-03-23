@@ -1,5 +1,4 @@
 import { FixedContext, isValidObject } from '@vodyani/core';
-import { omit } from 'lodash';
 
 import { DustOptions } from '../interface';
 
@@ -10,11 +9,11 @@ import { Dust } from './dust';
  *
  * @publicApi
  */
-export class DustContainer<KEY = any> {
+export class DustContainer {
   /**
    * DustContainer.store is a map of Dust instances.
    */
-  private store: Map<KEY, Dust> = new Map();
+  private store: Map<any, Dust> = new Map();
   /**
    * Create a dust thread pool and put it within a container.
    *
@@ -25,7 +24,7 @@ export class DustContainer<KEY = any> {
    * @publicApi
    */
   @FixedContext
-  public create(key: KEY, path: string, options?: DustOptions) {
+  public create(key: any, path: string, options?: DustOptions) {
     this.store.set(key, new Dust(path, options));
   }
   /**
@@ -39,16 +38,15 @@ export class DustContainer<KEY = any> {
    * @publicApi
    */
   @FixedContext
-  public get(key: KEY): Omit<Dust, 'close'> {
+  public get(key: any) {
     const dustPool = this.store.get(key);
 
     if (!isValidObject(dustPool)) {
       throw new Error(`DustContainer.store does not declare this key: ${key}`);
     }
 
-    return omit(dustPool, ['close']);
+    return dustPool;
   }
-
   /**
    * Close the thread pool and release all thread resources
    *
@@ -58,11 +56,12 @@ export class DustContainer<KEY = any> {
    * @publicApi
    */
   @FixedContext
-  public async destroy(key: KEY, isForce = false) {
+  public async destroy(key: any, isForce = false) {
     const dustPool = this.store.get(key);
 
     if (isValidObject(dustPool)) {
       await dustPool.close(isForce);
+
       this.store.delete(key);
     }
   }
