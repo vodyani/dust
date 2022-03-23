@@ -15,9 +15,17 @@
 npm install @vodyani/dust
 ```
 
-## Usage
+## Recommendations
+
+- typescript `v4.6.x`
+- node.js `v12.x` ~ `v16.x`
 
 ## Dependencies
+
+- [nestjs](https://github.com/nestjs) `v8`
+- [lodash](https://github.com/lodash/lodash) `v4`
+- [threads](https://github.com/andywer/threads.js) `v1`
+- [tiny-worker](https://github.com/avoidwork/tiny-worker) `v2`
 
 ## Contributing
 
