@@ -11,8 +11,6 @@ import { DustHandler } from './dust-handler';
  * @param path dust handler file path, You can choose whether to pass in a relative path through the configuration (the default is an absolute path).
  * @param options dust handler options, specific from the `worker` options in nodejs.
  *
- * @returns DustThread
- *
  * @publicApi
  */
 export class DustThread {
@@ -25,14 +23,12 @@ export class DustThread {
   /**
    * Assigns you a thread executor based on the built-in work handler, which will release all resources of the thread by default when execution is complete.
    *
-   * @param args handler Parameters passed to the executor.
+   * @param args handler parameters passed to the executor.
    *
    * @usageNotes
    *
    * - The thread and thread resources are released directly, regardless of whether the execution is successful or not.
    * - If the execution fails, the release thread will be executed before throwing an exception.
-   *
-   * @returns execution result
    *
    * @publicApi
    */

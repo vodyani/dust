@@ -62,7 +62,7 @@ describe('DustContainer execute', () => {
       'task',
       workers.task,
       {
-        pool: { maxQueuedJobs: 1, size: 1 },
+        poolOptions: { maxQueuedJobs: 1, size: 1 },
       },
     );
 
@@ -98,7 +98,7 @@ describe('DustContainer execute', () => {
       'async-task',
       workers['async-task'],
       {
-        pool: { maxQueuedJobs: 1, size: 1 },
+        poolOptions: { maxQueuedJobs: 1, size: 1 },
       },
     );
 
@@ -119,7 +119,7 @@ describe('DustContainer execute', () => {
       'error',
       workers.error,
       {
-        pool: { maxQueuedJobs: 1, size: 1 },
+        poolOptions: { maxQueuedJobs: 1, size: 1 },
       },
     );
 
@@ -141,7 +141,7 @@ describe('DustContainer Push', () => {
         'error-task',
         workers.task,
         {
-          handler: { useRelative: true },
+          handlerOptions: { useRelative: true },
         },
       );
     } catch (error) {
@@ -191,11 +191,13 @@ describe('DustContainer Push', () => {
 
     rmDust.push();
 
-    await rmDust.commit();
+    rmDust
+      .commit()
+      .then(async () => {
+        expect(existsSync(resolve(__dirname, '../temp'))).toBe(false);
 
-    expect(existsSync(resolve(__dirname, '../temp'))).toBe(false);
-
-    await container.destroy('make-file');
-    await container.destroy('remove-file');
+        await container.destroy('make-file');
+        await container.destroy('remove-file');
+      });
   });
 });

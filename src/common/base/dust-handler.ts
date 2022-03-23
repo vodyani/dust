@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 
+import { omit } from 'lodash';
 import { Worker } from 'threads';
-import { cloneDeep, omit } from 'lodash';
 import { getRelativePath, isValidObject } from '@vodyani/core';
 
 import { DustHandlerOptions } from '../interface';
@@ -11,8 +11,6 @@ import { DustHandlerOptions } from '../interface';
  *
  * @param path dust handler file path, You can choose whether to pass in a relative path through the configuration (the default is an absolute path).
  * @param options dust handler options, specific from the `worker` options in nodejs.
- *
- * @returns DustHandler
  *
  * @publicApi
  */
@@ -26,10 +24,13 @@ export class DustHandler extends Worker {
         useRelative = true;
       }
 
-      handlerOptions = omit(cloneDeep(options), ['useRelative']);
+      handlerOptions = omit(options, ['useRelative']);
     }
 
-    const handlerFilePath = useRelative ? path : getRelativePath(path, resolve(__dirname, './dust-worker'));
+    // Since you have to pass in relative paths when using the `threads` package, this solution is a no-brainer.
+    const handlerFilePath = useRelative
+      ? path
+      : getRelativePath(path, resolve(__dirname, './dust-worker'));
 
     super(handlerFilePath, handlerOptions);
   }
