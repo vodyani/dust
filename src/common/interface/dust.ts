@@ -1,14 +1,8 @@
-import { ThreadsWorkerOptions } from 'threads/dist/types/master';
+import { DustHandlerOptions } from './dust-handler';
 
-export { ThreadsWorkerOptions };
-
-export interface DustWorkerOptions extends ThreadsWorkerOptions {
-  /**
-   * Whether to use absolute paths
-   */
-  useAbsolute?: boolean;
-}
-
+/**
+ * Thread pool management parameters
+ */
 export interface DustPoolOptions {
   /**
    * Maximum no. of tasks to run on one worker thread at a time. Defaults to one.
@@ -27,14 +21,16 @@ export interface DustPoolOptions {
    */
   size?: number;
 }
-
+/**
+ * Dust creation parameters, contains handler and thread pool management parameters.
+ */
 export interface DustOptions {
   /**
    * Dust worker creation parameters
    */
-  worker?: DustWorkerOptions;
+  handlerOptions?: DustHandlerOptions;
   /**
    * Dust pool initialization parameters
    */
-  pool?: DustPoolOptions;
+  poolOptions?: DustPoolOptions;
 }
