@@ -4,6 +4,6 @@ const { expose } = require('threads/worker');
 
 expose(
   function error() {
-    throw new Error('Something went wrong');
+    throw new Error('ERROR_BY_DUST');
   },
 );
