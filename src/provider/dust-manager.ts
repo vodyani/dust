@@ -1,6 +1,7 @@
-import { FactoryProvider } from '@nestjs/common';
 import { FixedContext } from '@vodyani/core';
-import { DustManagerOptions } from 'src/common';
+import { FactoryProvider } from '@nestjs/common';
+
+import { DustManagerOptions } from '../common';
 
 import { DustProvider } from './dust-provider';
 
