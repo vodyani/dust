@@ -6,7 +6,7 @@
 [![Npm](https://img.shields.io/npm/dm/@vodyani/dust)](https://www.npmjs.com/package/@vodyani/dust)
 [![License](https://img.shields.io/github/license/vodyani/dust)](LICENSE)
 ![Workflow](https://github.com/vodyani/dust/actions/workflows/release.yml/badge.svg)
-[![codecov](https://codecov.io/gh/vodyani/dust/branch/main/graph/badge.svg?token=YHBHSZH5PB)](https://codecov.io/gh/vodyani/dust)
+[![codecov](https://codecov.io/gh/vodyani/dust/branch/master/graph/badge.svg?token=AF1JT0XG4N)](https://codecov.io/gh/vodyani/dust)
 [![Known Vulnerabilities](https://snyk.io/test/github/vodyani/dust/badge.svg?targetFile=package.json)](https://snyk.io/test/github/vodyani/dust?targetFile=package.json)
 
 ## Installation
