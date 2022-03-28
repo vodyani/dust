@@ -1,7 +1,7 @@
 {
   "name": "@vodyani/dust",
   "license": "MIT",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "author": "ChoGathK",
   "description": "🌟 dust is the threading solution of vodyani, which makes basic thread and thread pool functions available to the public. When work threads is invoked, it takes over threads and isolates them from the main thread.",
   "homepage": "https://github.com/vodyani/dust#readme",
