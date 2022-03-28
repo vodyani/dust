@@ -66,15 +66,14 @@
   "dependencies": {
     "@nestjs/common": "^8.4.0",
     "@nestjs/core": "^8.4.0",
-    "@vodyani/core": "^0.1.5",
+    "@vodyani/core": "^0.1.8",
     "lodash": "^4.17.21",
     "threads": "^1.7.0",
     "tiny-worker": "^2.3.0"
   },
   "peerDependencies": {
     "threads": "^1.7.0",
-    "tiny-worker": "^2.3.0",
-    "@vodyani/core": "^0.1.5"
+    "tiny-worker": "^2.3.0"
   },
   "devDependencies": {
     "@commitlint/cli": "16.2.3",
