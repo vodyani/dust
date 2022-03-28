@@ -27,18 +27,6 @@ npm install @vodyani/dust
 - [threads](https://github.com/andywer/threads.js) `v1`
 - [tiny-worker](https://github.com/avoidwork/tiny-worker) `v2`
 
-## Contributing
-
-- ❤ building
-
-## **Donations**
-
-- ❤ building
-
-## Links
-
-- ❤ building
-
 ## License
 
 Vodyani dust is [MIT licensed](LICENSE).

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { expose } = require('threads/worker');
-const { toSleep } = require('@vodyani/core');
+const { toDelay } = require('@vodyani/core');
 
 expose(
   async function blocking(name) {
@@ -11,7 +11,7 @@ expose(
 
       console.log(`${name} - ${count}`);
 
-      await toSleep(100);
+      await toDelay(100);
     }
 
     return count;
