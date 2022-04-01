@@ -1,7 +1,7 @@
 import { Pool, Thread, spawn } from 'threads';
 import { FixedContext, isValid, isValidObject } from '@vodyani/core';
 
-import { DustHandlerOptions, DustPoolOptions, DustOptions } from '../interface';
+import { DustHandlerOptions, DustPoolOptions, DustOptions } from '../common';
 
 import { DustHandler } from './dust-handler';
 

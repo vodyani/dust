@@ -1,9 +1,10 @@
 import { resolve } from 'path';
 
 import { Worker } from 'threads';
-import { getRelativePath, isValidObject } from '@vodyani/core';
+import { isValidObject } from '@vodyani/core';
 
-import { DustHandlerOptions } from '../interface';
+import { getRelativePath } from '../method';
+import { DustHandlerOptions } from '../common';
 
 /**
  * Dust handler specific from the `worker_threads` module in nodejs

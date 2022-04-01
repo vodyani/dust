@@ -4,7 +4,7 @@ import { isMainThread } from 'worker_threads';
 
 import { describe, it, expect } from '@jest/globals';
 
-import { DustThread } from '../src/common/base';
+import { DustThread } from '../src/base';
 
 const handlers = {
   'task': resolve(__dirname, './worker/task.js'),

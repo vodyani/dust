@@ -1,6 +1,6 @@
 import { FixedContext, isValidObject } from '@vodyani/core';
 
-import { DustOptions } from '../interface';
+import { DustOptions } from '../common';
 
 import { Dust } from './dust';
 

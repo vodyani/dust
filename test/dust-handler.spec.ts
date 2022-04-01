@@ -3,7 +3,7 @@ import { resolve } from 'path';
 
 import { describe, it, expect } from '@jest/globals';
 
-import { DustHandler } from '../src/common/base';
+import { DustHandler } from '../src/base';
 
 const taskPath = resolve(__dirname, './worker/task.js');
 

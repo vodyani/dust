@@ -2,7 +2,7 @@ import { resolve } from 'path';
 
 import { describe, it } from '@jest/globals';
 
-import { Dust } from '../src/common';
+import { Dust } from '../src/base';
 
 const blockingPath = resolve(__dirname, './worker/blocking-test.js');
 
