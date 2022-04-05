@@ -31,7 +31,7 @@ export class DustHandler extends Worker {
     // Since you have to pass in relative paths when using the `threads` package, this solution is a no-brainer.
     const handlerFilePath = useRelative
       ? path
-      : getRelativePath(path, resolve(__dirname, './dust-worker'));
+      : getRelativePath(path, resolve(__dirname, './dust-handler'));
 
     super(handlerFilePath, handlerOptions);
   }
