@@ -8,7 +8,7 @@ const blockingPath = resolve(__dirname, './worker/blocking-test.js');
 
 describe('Dust', () => {
   it('blocking test', async () => {
-    const handler = new Dust(blockingPath, { poolOptions: { maxQueuedJobs: 2, size: 2 }});
+    const handler = new Dust(blockingPath, { pools: { maxQueuedJobs: 2, size: 2 }});
 
     await Promise.all([
       handler.push('handler 1'),

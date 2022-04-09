@@ -24,14 +24,14 @@ export class Dust {
     let dustHandlerOptions: DustHandlerOptions = {};
 
     if (isValidObject(options)) {
-      const { handlerOptions, poolOptions } = options;
+      const { handler, pools } = options;
 
-      if (isValidObject(handlerOptions)) {
-        dustHandlerOptions = handlerOptions;
+      if (isValidObject(handler)) {
+        dustHandlerOptions = handler;
       }
 
-      if (isValidObject(poolOptions)) {
-        dustPoolOptions = poolOptions;
+      if (isValidObject(pools)) {
+        dustPoolOptions = pools;
       }
     }
 

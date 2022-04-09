@@ -28,9 +28,9 @@ export interface DustOptions {
   /**
    * Dust worker creation parameters
    */
-  handlerOptions?: DustHandlerOptions;
+  handler?: DustHandlerOptions;
   /**
    * Dust pool initialization parameters
    */
-  poolOptions?: DustPoolOptions;
+  pools?: DustPoolOptions;
 }

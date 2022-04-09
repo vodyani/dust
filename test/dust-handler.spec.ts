@@ -4,6 +4,7 @@ import { resolve } from 'path';
 import { describe, it, expect } from '@jest/globals';
 
 import { DustHandler } from '../src/base';
+import { getRelativePath } from '../src/method';
 
 const taskPath = resolve(__dirname, './worker/task.js');
 
@@ -36,5 +37,7 @@ describe('DustHandler', () => {
     } catch (error) {
       expect(!!error).toBe(true);
     }
+
+    expect(getRelativePath('', '')).toBe('./');
   });
 });

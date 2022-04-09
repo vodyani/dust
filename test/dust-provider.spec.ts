@@ -21,7 +21,7 @@ describe('DustContainer execute', () => {
       'task',
       workers.task,
       {
-        poolOptions: { maxQueuedJobs: 1, size: 1 },
+        pools: { maxQueuedJobs: 1, size: 1 },
       },
     );
 
@@ -57,7 +57,7 @@ describe('DustContainer execute', () => {
       'async-task',
       workers['async-task'],
       {
-        poolOptions: { maxQueuedJobs: 1, size: 1 },
+        pools: { maxQueuedJobs: 1, size: 1 },
       },
     );
 
@@ -78,7 +78,7 @@ describe('DustContainer execute', () => {
       'error',
       workers.error,
       {
-        poolOptions: { maxQueuedJobs: 1, size: 1 },
+        pools: { maxQueuedJobs: 1, size: 1 },
       },
     );
 
@@ -100,7 +100,7 @@ describe('DustContainer Push', () => {
         'error-task',
         workers.task,
         {
-          handlerOptions: { useRelative: true },
+          handler: { useRelative: true },
         },
       );
     } catch (error) {
