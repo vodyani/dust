@@ -1,9 +1,9 @@
 import { DustOptions } from './dust';
 
 /**
- * DustManagerBaseOption
+ * DustContainerOptions
  */
-export interface DustManagerBaseOption {
+export interface DustContainerOptions {
   /**
    * Identification key of the `DustManager` provider.
    */
