@@ -1,17 +1,19 @@
-import { FixedContext } from '@vodyani/core';
-import { FactoryProvider } from '@nestjs/common';
+import { FixedContext, ProviderFactory } from '@vodyani/core';
 
 import { DustManagerOptions } from '../common';
 
 import { DustProvider } from './dust-provider';
 
-export class DustManager {
+export class DustManager implements ProviderFactory {
   public static token = Symbol('DustManager');
 
-  private provider: FactoryProvider;
+  constructor(
+    private readonly options: DustManagerOptions,
+  ) {}
 
-  constructor(private readonly options: DustManagerOptions) {
-    this.provider = {
+  @FixedContext
+  public create() {
+    return {
       inject: [DustProvider],
       provide: DustManager.token,
       useFactory: this.useFactory,
@@ -19,16 +21,11 @@ export class DustManager {
   }
 
   @FixedContext
-  public getFactoryProvider() {
-    return this.provider;
-  }
-
-  @FixedContext
-  private async useFactory(dust: DustProvider) {
+  private async useFactory(provider: DustProvider) {
     this.options.forEach(({ dustKey, dustHandlerPath, dustOptions }) => {
-      dust.create(dustKey, dustHandlerPath, dustOptions);
+      provider.create(dustKey, dustHandlerPath, dustOptions);
     });
 
-    return dust;
+    return provider;
   }
 }

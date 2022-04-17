@@ -15,7 +15,7 @@ export class DustModule {
   static forRoot(options: DustManagerOptions, global = false): DynamicModule {
     const providers = [
       DustProvider,
-      new DustManager(options).getFactoryProvider(),
+      new DustManager(options).create(),
     ];
 
     return {
