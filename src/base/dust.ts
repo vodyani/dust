@@ -1,5 +1,6 @@
+import { FixedContext } from '@vodyani/core';
 import { Pool, Thread, spawn } from 'threads';
-import { FixedContext, isValid, isValidObject } from '@vodyani/core';
+import { isValidObject, isValid } from '@vodyani/validator';
 
 import { DustHandlerOptions, DustPoolOptions, DustOptions } from '../common';
 

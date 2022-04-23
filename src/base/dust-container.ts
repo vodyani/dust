@@ -1,4 +1,5 @@
-import { FixedContext, isValidObject } from '@vodyani/core';
+import { FixedContext } from '@vodyani/core';
+import { isValidObject } from '@vodyani/validator';
 
 import { DustOptions } from '../common';
 

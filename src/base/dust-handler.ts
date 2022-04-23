@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 
 import { Worker } from 'threads';
-import { isValidObject } from '@vodyani/core';
+import { isValidObject } from '@vodyani/validator';
 
 import { getRelativePath } from '../method';
 import { DustHandlerOptions } from '../common';
