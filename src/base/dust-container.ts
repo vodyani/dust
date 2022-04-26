@@ -1,5 +1,4 @@
 import { FixedContext } from '@vodyani/core';
-import { isValidObject } from '@vodyani/validator';
 
 import { DustOptions } from '../common';
 
@@ -42,7 +41,7 @@ export class DustContainer {
   public get(key: any) {
     const dustPool = this.store.get(key);
 
-    if (!isValidObject(dustPool)) {
+    if (!dustPool) {
       throw new Error(`DustContainer.store does not declare this key: ${key}`);
     }
 
@@ -60,7 +59,7 @@ export class DustContainer {
   public async destroy(key: any, isForce = false) {
     const dustPool = this.store.get(key);
 
-    if (isValidObject(dustPool)) {
+    if (dustPool) {
       await dustPool.close(isForce);
 
       this.store.delete(key);

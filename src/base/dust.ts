@@ -1,6 +1,5 @@
 import { FixedContext } from '@vodyani/core';
 import { Pool, Thread, spawn } from 'threads';
-import { isValidObject, isValid } from '@vodyani/validator';
 
 import { DustHandlerOptions, DustPoolOptions, DustOptions } from '../common';
 
@@ -24,14 +23,14 @@ export class Dust {
     let dustPoolOptions: DustPoolOptions = {};
     let dustHandlerOptions: DustHandlerOptions = {};
 
-    if (isValidObject(options)) {
+    if (options) {
       const { handler, pools } = options;
 
-      if (isValidObject(handler)) {
+      if (handler) {
         dustHandlerOptions = handler;
       }
 
-      if (isValidObject(pools)) {
+      if (pools) {
         dustPoolOptions = pools;
       }
     }
@@ -55,7 +54,7 @@ export class Dust {
    */
   @FixedContext
   public async execute<T = any>(...args: any[]): Promise<T> {
-    if (isValid(this.pool)) {
+    if (this.pool) {
       try {
         const result = await this.push(...args);
         return result;
@@ -76,7 +75,7 @@ export class Dust {
    */
   @FixedContext
   public async push(...args: any[]) {
-    if (isValid(this.pool)) {
+    if (this.pool) {
       return this.pool.queue(
         async (thread: any) => thread(...args),
       );
@@ -94,7 +93,7 @@ export class Dust {
    */
   @FixedContext
   public async commit() {
-    if (isValid(this.pool)) {
+    if (this.pool) {
       await this.pool.settled();
     }
   }
@@ -105,7 +104,7 @@ export class Dust {
    */
   @FixedContext
   public async close(isForce = false) {
-    if (isValid(this.pool)) {
+    if (this.pool) {
       await this.pool.terminate(isForce);
 
       this.pool = null;

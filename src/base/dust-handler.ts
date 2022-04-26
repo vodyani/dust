@@ -1,7 +1,6 @@
 import { resolve } from 'path';
 
 import { Worker } from 'threads';
-import { isValidObject } from '@vodyani/validator';
 
 import { getRelativePath } from '../method';
 import { DustHandlerOptions } from '../common';
@@ -19,7 +18,7 @@ export class DustHandler extends Worker {
     let handlerOptions = {};
     let useRelative = false;
 
-    if (isValidObject(options)) {
+    if (options) {
       if (options.useRelative) {
         useRelative = true;
         delete options.useRelative;
