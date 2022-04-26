@@ -16,6 +16,7 @@ npm install @vodyani/dust
 ```
 
 ## Recommendations
+> [Get started with documentation](https://vodyani.vercel.app/docs/advanced/dust)
 
 - typescript `v4.6.x`
 - node.js `v12.x` ~ `v16.x`
