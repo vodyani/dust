@@ -23,7 +23,8 @@ npm install @vodyani/dust
 
 ## Dependencies
 
-- [nestjs](https://github.com/nestjs) `v8`
+- [vodyani/core](https://github.com/vodyani/core) `v8`
+- [nestjs/common](https://github.com/nestjs) `v8`
 - [lodash](https://github.com/lodash/lodash) `v4`
 - [threads](https://github.com/andywer/threads.js) `v1`
 - [tiny-worker](https://github.com/avoidwork/tiny-worker) `v2`
